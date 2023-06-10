@@ -4,6 +4,9 @@ import Banner from "./Banner"
 import {DisplayPokemonImage, DisplayPokemonName} from "./displayPokemon"
 import {DisplayHintsTypes, DisplayHintsAbilities} from "./displayHints"
 
+
+//Declare variables
+
 let o = 0
 let i = 0
 let letter=""
@@ -13,12 +16,21 @@ let correctGuessCounter = 0
 let getHint = false
 
 export default function App() {
-  const [pokemonData, setPokemonData] = useState({})
+  //Create useStates
+  const [pokemonData, setPokemonData] = useState(
+    {
+      name: "", 
+      types: [{type: {name: ''}}], 
+      abilities:[{ability: {name: ''}, is_hidden: false}], 
+      sprites: {other: { home: { front_default: ""}}}
+    }
+  )
   const [count, setCount] = useState(1)
   const [show, setShow] = useState(false)
-  const [types, setTypes] = useState([])
-  const [pokemonAbilities, setPokemonAbilities] = useState([])
+  const [types, setTypes] = useState<string[]>([])
+  const [pokemonAbilities, setPokemonAbilities] = useState<string[]>([])
   const [formData, setFormData] = useState({answer: ""})
+
 
   function handleChange(event) {
     let tryAnswer = event.target.value
@@ -43,8 +55,7 @@ export default function App() {
 
   function getPokemonAbilities(){
     if (getHint === true) {
-      o = 0
-      for (o in pokemonData.abilities) {
+      for (o = 0; o < pokemonData.abilities.length; o++) {
         if (o == 0) {
           setPokemonAbilities(prevAbilities => {return [...prevAbilities, pokemonData.abilities[0].ability.name]})
         } else if (o == 1) {
@@ -62,8 +73,7 @@ export default function App() {
 
   function getTypes() {
     if (getHint === true) {
-      i = 0
-      for (i in pokemonData.types) {
+      for (i = 0; i < pokemonData.types.length; i++) {
         if (i == 0) {
           setTypes(prevTypes => {return [...prevTypes, pokemonData.types[0].type.name]})
         } else if (i == 1) {
@@ -74,7 +84,7 @@ export default function App() {
   }
 
   function getLetter() {
-    return getHint ? "" : letter = pokemonName.charAt(Math.floor(Math.random() * pokemonName.length)).toUpperCase()
+    return getHint ? "" : letter = pokemonName[Math.floor(Math.random() * pokemonName.length)].toUpperCase()
   }
 
   function hint(){
