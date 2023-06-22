@@ -30,6 +30,16 @@ export default function App() {
   const [types, setTypes] = useState<string[]>([])
   const [pokemonAbilities, setPokemonAbilities] = useState<string[]>([])
   const [formData, setFormData] = useState({answer: ""})
+  const [width, setWidth] = useState(window.innerWidth);
+  const breakpoint = 850;
+
+  useEffect(() => {
+    const handleResizeWindow = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResizeWindow);
+    return () => {
+      window.removeEventListener("resize", handleResizeWindow);
+    };
+  }, []);
 
 
   function handleChange(event) {
@@ -138,7 +148,7 @@ export default function App() {
 
         <h1>Correct guesses: {correctGuessCounter}</h1>
         <input 
-          ref={input => input && input.focus()}
+          ref={width > breakpoint ? (input => input && input.focus()) : null}
           maxLength={25}
           size={25}
           disabled={show}
