@@ -142,9 +142,9 @@ export default function App() {
   
   return (
     <div>
-        
+        {/* 
+        <Banner /> 
 
-        <h1>Correct guesses: {correctGuessCounter}</h1>
         <input 
           ref={width > breakpoint ? (input => input && input.focus()) : null}
           maxLength={25}
@@ -157,6 +157,11 @@ export default function App() {
           name="answer"
           value={formData.answer}>
         </input>
+
+        */}
+         
+        <h1>Correct guesses: {correctGuessCounter}</h1>
+
 
         {pokemonName && !correctGuess && getHint && <p>This Pokemon name contains this letter: {letter}</p>}
 
@@ -171,7 +176,7 @@ export default function App() {
           pokemonAbilities={pokemonAbilities}
           abilitiesAmount={o}
         />}
-
+        
         <div>
           {!correctGuess && !show && <button onClick={hint}>Get a hint ({hintCounter > 3 ? 3 : hintCounter}/3)</button>}
         </div>
