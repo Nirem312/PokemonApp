@@ -142,9 +142,9 @@ export default function App() {
   
   return (
     <div>
-        {/* 
+        
         <Banner /> 
-
+        {/* 
         <input 
           ref={width > breakpoint ? (input => input && input.focus()) : null}
           maxLength={25}
