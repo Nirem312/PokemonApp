@@ -153,7 +153,7 @@ export default function App() {
           disabled={show}
           type="text"
           className="answer"
-          placeholder="Who's that pokemon?"                 
+          placeholder="Who's that Pokemon?"                 
           onChange={handleChange}
           name="answer"
           value={formData.answer}>

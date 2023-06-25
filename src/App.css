@@ -78,7 +78,10 @@ input{
   margin-bottom: 25px;
   color: rgba(255, 255, 255, 0.87);
   background-color: #2b2a33;
-  border-color: #75747a;
+  padding: 3px;
+  border: 1px solid #75747a;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 button {
