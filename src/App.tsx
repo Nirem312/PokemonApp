@@ -1,22 +1,20 @@
-import React, {useState, useEffect} from "react"
+import React, { useState, useEffect, useContext } from "react"
 import './App.css'
 import Banner from "./Banner"
 import {DisplayPokemonImage, DisplayPokemonName} from "./displayPokemon"
 import {DisplayHintsTypes, DisplayHintsAbilities} from "./displayHints"
 
-
-//Declare variables
-
 let o = 0
 let i = 0
-let letter=""
+let letter = ""
 let hintCounter = 0
 let correctGuess = false
 let correctGuessCounter = 0
 let getHint = false
 
+export const UserContext = React.createContext(false)
+
 export default function App() {
-  //Create useStates
   const [pokemonData, setPokemonData] = useState(
     {
       name: "", 
@@ -46,7 +44,7 @@ export default function App() {
     let tryAnswer = event.target.value
     if (tryAnswer.match(/^[a-zA-Z]+$/)) {
       if (tryAnswer.toLowerCase() === pokemonName){
-        setShow(true)
+        toggle()
         correctGuess = true
         correctGuessCounter++
       }
@@ -144,7 +142,7 @@ export default function App() {
   
   return (
     <div>
-        <Banner />
+        
 
         <h1>Correct guesses: {correctGuessCounter}</h1>
         <input 
@@ -159,7 +157,6 @@ export default function App() {
           name="answer"
           value={formData.answer}>
         </input>
-        <br/>
 
         {pokemonName && !correctGuess && getHint && <p>This Pokemon name contains this letter: {letter}</p>}
 
@@ -175,26 +172,31 @@ export default function App() {
           abilitiesAmount={o}
         />}
 
-        {!correctGuess && !show && <button onClick={hint}>Get a hint ({hintCounter > 3 ? 3 : hintCounter}/3)</button>}
+        <div>
+          {!correctGuess && !show && <button onClick={hint}>Get a hint ({hintCounter > 3 ? 3 : hintCounter}/3)</button>}
+        </div>
 
-        {pokemonName && 
-        <DisplayPokemonName 
-          showState={show}
-          correctGuess={correctGuess}
-          pokeWiki={pokeWiki}
-          pokemonName={pokemonName}
-        />}
+        <UserContext.Provider value={show}>
 
-        {pokemonData.sprites && 
-        <DisplayPokemonImage 
-          showState={show}
-          imageInfo={pokemonData.sprites.other.home.front_default}
-          pokeInfo={pokemonData}
-        />}
+          {pokemonName && 
+          <DisplayPokemonName 
+            correctGuess={correctGuess}
+            pokeWiki={pokeWiki}
+            pokemonName={pokemonName}
+          />}
 
-        <br/>
-        {!correctGuess && !show && <button onClick={toggle}>Reveal Pokemon</button>}
-        <button onClick={newPokemon}>Get new Pokemon</button>
+          {pokemonData.sprites && 
+          <DisplayPokemonImage 
+            imageInfo={pokemonData.sprites.other.home.front_default}
+            pokeInfo={pokemonData}
+          />}
+
+        </UserContext.Provider>
+
+        <div>
+          {!correctGuess && !show && <button onClick={toggle}>Reveal Pokemon</button>}
+          <button onClick={newPokemon}>Get new Pokemon</button>
+        </div>
     </div>
   )
 }
